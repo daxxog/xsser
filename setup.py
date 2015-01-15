@@ -23,7 +23,7 @@ gtk_app_files = ['gtk/xsser.desktop']
 
 setup(
     name = "xsser",
-    version = "1.6",
+    version = "1.6.0",
     packages = ['XSSer', 'XSSer.fuzzing', 'XSSer.post'],
     data_files = [('/usr/share/doc/xsser/', doc_files), 
                   ('/usr/share/xsser/gtk/images/', data_files),

@@ -1,3 +1,4 @@
 dist
 xsser.egg-info
 *.pyc
+xsser.sh

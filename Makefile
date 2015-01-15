@@ -1,24 +1,24 @@
-# $Id: Makefile,v 1.6 2008/10/29 01:01:35 ghantoos Exp $
-#
-
 PYTHON=`which python`
 DESTDIR=/
 BUILDIR=$(CURDIR)/debian/xsser
 PROJECT=xsser
-VERSION=0.4.0
+VERSION=1.6.0
 
 all:
-	@echo "make source - Create source package"
-	@echo "make install - Install on local system"
-	@echo "make buildrpm - Generate a rpm package"
-	@echo "make builddeb - Generate a deb package"
-	@echo "make clean - Get rid of scratch and byte files"
+	$(MAKE) source
+	rm -rf xsser.egg-info
 
 source:
 	$(PYTHON) setup.py sdist $(COMPILE)
 
 install:
-	$(PYTHON) setup.py install --root $(DESTDIR) $(COMPILE)
+	chmod +x xsser.py
+	cp -f empty.sh xsser.sh
+	echo "APPDIR=$(CURDIR)" >> xsser.sh
+	cat xsser-tail.sh >> xsser.sh
+	chmod +x xsser.sh
+	echo "alias xsser='. $(CURDIR)/xsser.sh'" >> '$(HOME)/.bashrc'
+	echo "alias xsser='. $(CURDIR)/xsser.sh'" >> '$(HOME)/.bash_profile'
 
 buildrpm:
 	$(PYTHON) setup.py bdist_rpm --post-install=rpm/postinstall --pre-uninstall=rpm/preuninstall
@@ -36,3 +36,4 @@ clean:
 	$(MAKE) -f $(CURDIR)/debian/rules clean
 	rm -rf build/ MANIFEST
 	find . -name '*.pyc' -delete
+	rm -rf xsser.egg-info
